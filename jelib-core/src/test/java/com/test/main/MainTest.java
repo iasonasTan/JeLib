@@ -26,6 +26,7 @@ public class MainTest {
         JeLib.console().setEnabled(Console.Type.WARNING, false);
         JeLib.console().setEnabled(Console.Type.INFO, false);
         JeLib.console().log("Hello from JeLib!");
+        JeLib.console().setEnabled(Console.Type.WARNING, true);
         JeLib.console().warn("This lib is empty!");
         JeLib.console().error("Aborting!");
         JeLib.console().setEnabled(Console.Type.INFO, true);

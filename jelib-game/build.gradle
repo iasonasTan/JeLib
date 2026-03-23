@@ -12,6 +12,13 @@ dependencies {
     implementation libs.guava
 }
 
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)

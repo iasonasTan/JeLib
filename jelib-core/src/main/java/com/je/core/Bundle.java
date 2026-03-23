@@ -3,32 +3,72 @@ package com.je.core;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A bundle that holds data like a {@link Map}.
+ * This class uses a {@link Map} to store the
+ * data and methods to get values and cast the data.
+ */
 public final class Bundle {
+    /**
+     * Returns a builder that generates a bundle.
+     * @return {@link Builder} instance.
+     */
     public static Builder builder() {
         return new Builder();
     }
 
-    private final Map<String, Object> mData = new HashMap<>();
+    /**
+     * Map that holds data
+     */
+    private final Map<String, Object> mData;
 
+    /**
+     * Constructs a bundle with a {@link HashMap}.
+     */
     public Bundle() {
+        this(new HashMap<String, Object>());
     }
 
+    /**
+     * Constructs a bundle with a {@link HashMap} and puts given values.
+     * @param data Data to put into map after construction.
+     */
     public Bundle(Map<String, Object> data) {
-        mData.putAll(data);
+        mData = new HashMap<String, Object>();
     }
 
+    /**
+     * Constructs a bundle and copies values from given one 
+     * @param bundle Bundle to copy data from.
+     */
     public Bundle(Bundle bundle) {
+        this(new HashMap<String, Object>());
         mData.putAll(bundle.mData);
     }
 
+    /**
+     * Returns the object of the given key.
+     * @param key Key of object to return.
+     * @return Value of given key as {@link Object}.
+     */
     public Object get(String key) {
         return mData.get(key);
     }
 
+    /**
+     * Returns the string of the given key.
+     * @param key Key of object to return.
+     * @return Value of given key as {@link String}
+     */
     public String getString(String key) {
         return (String)mData.get(key);
     }
 
+    /**
+     * Returns the integer of the given key.
+     * @param key Key of object to return.
+     * @return Value of given key as integer.
+     */
     public int getInteger(String key, int defaultValue) {
         Object obj = mData.get(key);
         if(obj==null)
@@ -36,6 +76,11 @@ public final class Bundle {
         return (Integer)obj;
     }
 
+    /**
+     * Returns the double of the given key.
+     * @param key Key of object to return.
+     * @return Value of given key as double.
+     */
     public double getDouble(String key, double defaultValue) {
         Object obj = mData.get(key);
         if(obj==null)
@@ -43,31 +88,64 @@ public final class Bundle {
         return (Double)obj;
     }
 
+    /**
+     * Returns the object of the given key.
+     * @param key Key of object to return.
+     * @return Value of given key as param T.
+     * @param <T> Type to cast object to.
+     */
     public <T> T getObject(String key, Class<T> clazz) {
         Object obj = mData.get(key);
         return clazz.cast(obj);
     }
 
-    public void put(String id, Object obj) {
-        mData.put(id, obj);
+    /**
+     * Puts given key and object to bundle.
+     * @param key Key of object to put.
+     * @param value Value to put to bundle.
+     */
+    public void put(String key, Object value) {
+        mData.put(key, value);
     }
 
+    /**
+     * Returns a representation of the bundle.
+     * @return returns a string that represents the bundle.
+     */
     @Override
     public String toString() {
         return getClass().getSimpleName()+mData;
     }
 
+    /**
+     * Builds a bundle and supplies method {@link Bundle#put(String,Object)}
+     */
     public static final class Builder {
+        /**
+         * Building bundle.
+         */
         private final Bundle mBundle = new Bundle();
 
+        /**
+         * Constructs a builder.
+         */
         private Builder(){
         }
 
+        /**
+         * Puts given key and object to the building bundle.
+         * @param id Id of object to put.
+         * @param obj Object to put.
+         * @return Returns this so chain calls are possible.
+         */
         public Builder put(String id, Object obj) {
             mBundle.put(id, obj);
             return this;
         }
-
+    
+        /**
+         * Returns instance of building bundle.
+         */
         public Bundle build() {
             return mBundle;
         }
