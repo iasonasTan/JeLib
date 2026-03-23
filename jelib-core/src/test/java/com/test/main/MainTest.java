@@ -19,7 +19,7 @@ public class MainTest {
         JeLib.console().error("Aborting!");
         JeLib.console().setEnabled(Console.Type.INFO, true);
         JeLib.console().log("Hello! Can you see me?");
-        JeLib.console().exception(new RuntwimeException("Cannot load stuff"));
+        JeLib.console().exception(new RuntimeException("Cannot load stuff"));
     }
 
     @Test
