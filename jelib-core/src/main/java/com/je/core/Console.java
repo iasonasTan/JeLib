@@ -46,12 +46,9 @@ public class Console {
      * @param color Color of the message.
      * @see #setEnabled(Type, boolean)
      */
-    private void log(Type type, Object obj, String color) {
+    private void log(Type type, Object obj, int color) {
         if(!mEnabledTypes.contains(type)) return;
-        if(color != null)
-            mOut.printf("%s[%s] %s\n", color, type.name(), obj.toString());
-        else
-            mOut.printf("[%s] %s\n", type.name(), obj.toString());
+        mOut.printf("\u001B[%dm[%s] %s\n\u001B[37m", color, type.name(), obj.toString());
     }
 
     /**
@@ -59,7 +56,7 @@ public class Console {
      * @param obj object to print.
      */
     public void log(Object obj) {
-        log(Type.INFO, obj, null);
+        log(Type.INFO, obj, 37);
     }
 
     /**
@@ -67,7 +64,7 @@ public class Console {
      * @param obj object to print.
      */
     public void error(Object obj) {
-        log(Type.ERROR, obj, "\u001B[31m");
+        log(Type.ERROR, obj, 31);
     }
 
     /**
@@ -75,7 +72,7 @@ public class Console {
      * @param obj object to print.
      */
     public void warn(Object obj) {
-        log(Type.WARNING, obj, "\u001B[33m");
+        log(Type.WARNING, obj, 33);
     }
 
     /**
@@ -98,7 +95,7 @@ public class Console {
                 cause!=null?cause.getMessage():"No Information",
                 Utils.stacktraceToString(throwable.getStackTrace(), "\u001B[31m")
         );
-        log(Type.EXCEPTION, msg, "\u001B[31m");
+        log(Type.EXCEPTION, msg, 31);
     }
 
     /**
