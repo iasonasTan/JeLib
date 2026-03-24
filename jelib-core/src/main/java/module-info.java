@@ -4,4 +4,6 @@
  */
 module JeLib.core {
     exports com.je.core;
+    exports com.je.core.util;
+    exports com.je.core.broadcast;
 }

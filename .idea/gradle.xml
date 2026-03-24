@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/jelib-game" />
             <option value="$PROJECT_DIR$/jelib-gui" />
             <option value="$PROJECT_DIR$/jelib-io" />
+            <option value="$PROJECT_DIR$/jelib-media" />
           </set>
         </option>
       </GradleProjectSettings>

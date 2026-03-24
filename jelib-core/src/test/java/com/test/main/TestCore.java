@@ -1,11 +1,43 @@
 package com.test.main;
 
 import com.je.core.*;
+import com.je.core.broadcast.AbstractMessageReceiver;
+import com.je.core.broadcast.FunctionalMessageReceiver;
+import com.je.core.broadcast.Message;
+import com.je.core.util.Bundle;
+import com.je.core.util.LazyExecutor;
+import com.je.core.util.Utils;
 import org.junit.Test;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
-public class MainTest {
+public class TestCore {
+    @Test
+    public void broadcasts() {
+        JeApplication application = new JeApplication();
+
+        application.registerReceiver(new AbstractMessageReceiver("show_text") {
+            @Override
+            public void onReceive(Message message) {
+                String text = message
+                        .getBundle()
+                        .getString("secret_message");
+                JeLib.console().log("That's the secret message: "+text);
+            }
+        });
+
+        Consumer<Message> messageConsumer = m -> JeLib.console().log("Message: "+m.getBundle().getString("secret_message"));
+        application.registerReceiver(new FunctionalMessageReceiver(messageConsumer, "show_text"));
+
+        application.broadcastMessage(
+                Message.newBuilder()
+                        .setAction("show_text")
+                        .putExtra("secret_message", "Hello, World!")
+                        .build()
+        );
+    }
+
     @Test
     public void lazyExecutorAndBundle() {
         // msg1 and msg3 must be printed

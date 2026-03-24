@@ -1,6 +1,6 @@
 package com.je.game.bounds;
 
-import lib.Copyable;
+import com.je.core.Copyable;
 
 import java.awt.*;
 

@@ -1,10 +1,17 @@
 package com.je.core;
 
+import com.je.core.util.Utils;
+
 import java.io.PrintStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Console is a class that prints messages to given {@link PrintStream}.
+ * Supplies methods like {@link #log(Object)} or {@link #warn(Object)} to
+ * print messages with different colors.
+ */
 public class Console {
     /**
      * Set contains enabled type of logs.
@@ -102,9 +109,24 @@ public class Console {
      * Types of logging.
      */
     public enum Type {
+        /**
+         * Prints an error.
+         */
         ERROR,
+
+        /**
+         * Prints a warning.
+         */
         WARNING,
+
+        /**
+         * Prints information.
+         */
         INFO,
+
+        /**
+         * Prints an exception.
+         */
         EXCEPTION
     }
 }

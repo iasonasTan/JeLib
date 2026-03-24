@@ -1,4 +1,6 @@
-package com.je.core;
+package com.je.core.util;
+
+import com.je.core.Copyable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +10,7 @@ import java.util.Map;
  * This class uses a {@link Map} to store the
  * data and methods to get values and cast the data.
  */
-public final class Bundle {
+public final class Bundle implements Copyable<Bundle> {
     /**
      * Returns a builder that generates a bundle.
      * @return {@link Builder} instance.
@@ -34,7 +36,7 @@ public final class Bundle {
      * @param data Data to put into map after construction.
      */
     public Bundle(Map<String, Object> data) {
-        mData = data;
+        mData = new HashMap<>(data);
     }
 
     /**
@@ -42,8 +44,7 @@ public final class Bundle {
      * @param bundle Bundle to copy data from.
      */
     public Bundle(Bundle bundle) {
-        this(new HashMap<>());
-        mData.putAll(bundle.mData);
+        this(new HashMap<>(bundle.mData));
     }
 
     /**
@@ -115,6 +116,23 @@ public final class Bundle {
     @Override
     public String toString() {
         return getClass().getSimpleName()+mData;
+    }
+
+    /**
+     * Returns a copy of {@code this}.
+     * It's recommended to use a copy constructor.
+     */
+    @Override
+    public Bundle copy() {
+        return new Bundle(this);
+    }
+
+    /**
+     * Returns a raw copy of the bundle's data.
+     * @return a raw copy of the bundle's data as {@link HashMap}.
+     */
+    public Map<String, Object> getRawData() {
+        return new HashMap<>(mData);
     }
 
     /**

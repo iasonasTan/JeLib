@@ -1,5 +1,8 @@
-package com.je.core;
+package com.je.core.util;
 
+/**
+ * Core utilities of JeLib.
+ */
 public final class Utils {
     /**
      * Converts given StackTrace into a string.

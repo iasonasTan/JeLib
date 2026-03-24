@@ -1,4 +1,4 @@
-package com.je.core;
+package com.je.core.util;
 
 import java.util.HashMap;
 import java.util.Map;

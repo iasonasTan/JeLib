@@ -1,6 +1,6 @@
 package com.je.game.bounds;
 
-import lib.Copyable;
+import com.je.core.Copyable;
 
 public final class Hitbox3 implements Copyable<Hitbox3> {
     public double x, y, z;

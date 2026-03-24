@@ -1,4 +1,4 @@
-package com.je.core;
+package com.je.core.util;
 
 import java.util.function.Consumer;
 
@@ -11,6 +11,11 @@ public class LazyExecutor {
      * Time that executor rests for in millis.
      */
     private final long mRestTimeMillis;
+
+    /**
+     * Alternative executor, if method {@link #execute(Bundle)} is not overridden.
+     * Then, this {@link Consumer<  Bundle  >} will do the job.
+     */
     private final Consumer<Bundle> mExecutor;
 
     /**

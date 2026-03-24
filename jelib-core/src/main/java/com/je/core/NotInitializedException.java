@@ -2,6 +2,9 @@ package com.je.core;
 
 import java.security.PrivilegedActionException;
 
+/**
+ * Gets thrown when a utility class gets requested to return an initialize, but it's not initialized.
+ */
 public class NotInitializedException extends RuntimeException {
     /**
      * Constructs a new throwable with {@code null} as its detail message.

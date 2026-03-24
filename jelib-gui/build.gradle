@@ -12,6 +12,7 @@ dependencies {
     implementation libs.guava
     implementation project(':jelib-core')
     implementation project(':jelib-io')
+    implementation project(':jelib-media')
 }
 
 test {

@@ -1,18 +1,33 @@
 package com.je.io.configuration;
 
+import com.je.core.JeLib;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * {@link Properties} wrapper that can load properties from {@link InputStream}
+ * by just calling {@link #load(InputStream)}.
+ * @deprecated use Bundle instead.
+ */
+@Deprecated
 public class InputProperties {
+    /**
+     * Holds properties.
+     */
     private Properties mProperties = null;
 
+    /**
+     * Loads properties from {@link InputStream}.
+     * @param inputStream stream to load properties from.
+     */
     public void load(InputStream inputStream) {
         try {
             mProperties = new Properties();
             mProperties.load(inputStream);
         } catch (IOException e) {
-            System.err.println("Could not load properties from input stream "+inputStream);
+            JeLib.console().exception(e);
         }
     }
 

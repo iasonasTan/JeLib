@@ -11,6 +11,9 @@ dependencies {
     api libs.commons.math3
     implementation libs.guava
     implementation project(':jelib-core')
+    implementation project(':jelib-io')
+    implementation project(':jelib-gui')
+    implementation project(':jelib-media')
 }
 
 test {

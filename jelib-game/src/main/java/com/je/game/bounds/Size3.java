@@ -1,6 +1,6 @@
 package com.je.game.bounds;
 
-import lib.Copyable;
+import com.je.core.Copyable;
 
 public final class Size3 implements Copyable<Size3> {
     public double width, height, length;

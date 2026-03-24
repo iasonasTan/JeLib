@@ -1,6 +1,6 @@
 package com.je.game.bounds;
 
-import lib.Copyable;
+import com.je.core.Copyable;
 
 public final class Vector3 implements Copyable<Vector3> {
     public double x, y, z;

@@ -1,8 +1,8 @@
 package com.je.game.score;
 
-import lib.io.Configuration;
-import lib.io.InputProperties;
-import lib.io.OutputProperties;
+import com.je.io.configuration.Configuration;
+import com.je.io.configuration.InputProperties;
+import com.je.io.configuration.OutputProperties;
 
 import java.io.Closeable;
 
