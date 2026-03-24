@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import com.je.core.JeLib;
 import com.je.core.util.Utils;
+import com.je.io.IOUtils;
 
 /**
  * Utilities related to GUI stuff.
@@ -31,7 +32,7 @@ public final class GuiUtils {
                 exception.getMessage()==null?"No message details.":exception.getLocalizedMessage(),
                 Utils.stacktraceToString(exception.getStackTrace(), null)
         );
-        Image image = Resources.loadImage("/alert.png", GuiUtils.class);
+        Image image = IOUtils.loadImage("/alert.png", GuiUtils.class);
         image = image.getScaledInstance(100, 100, BufferedImage.SCALE_SMOOTH);
 
         JTextArea jTextArea = new JTextArea();
