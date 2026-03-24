@@ -1,7 +1,6 @@
 package com.test.main;
 
 import com.je.core.*;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.Map;

@@ -26,7 +26,7 @@ public final class Bundle {
      * Constructs a bundle with a {@link HashMap}.
      */
     public Bundle() {
-        this(new HashMap<String, Object>());
+        this(new HashMap<>());
     }
 
     /**
@@ -34,7 +34,7 @@ public final class Bundle {
      * @param data Data to put into map after construction.
      */
     public Bundle(Map<String, Object> data) {
-        mData = new HashMap<String, Object>();
+        mData = data;
     }
 
     /**
@@ -42,7 +42,7 @@ public final class Bundle {
      * @param bundle Bundle to copy data from.
      */
     public Bundle(Bundle bundle) {
-        this(new HashMap<String, Object>());
+        this(new HashMap<>());
         mData.putAll(bundle.mData);
     }
 
@@ -134,7 +134,7 @@ public final class Bundle {
 
         /**
          * Puts given key and object to the building bundle.
-         * @param id Id of object to put.
+         * @param id ID of object to put.
          * @param obj Object to put.
          * @return Returns this so chain calls are possible.
          */

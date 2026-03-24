@@ -1,5 +1,4 @@
-// The settings file is used to specify which projects to include in your build.
-// For more detailed information on multi-project builds, please refer to https://docs.gradle.org/9.2.0/userguide/multi_project_builds.html in the Gradle documentation.
+// https://docs.gradle.org/9.2.0/userguide/multi_project_builds.html : Gradle documentation.
 
 plugins {
     // Apply the foojay-resolver plugin to allow automatic download of JDKs
@@ -7,4 +6,4 @@ plugins {
 }
 
 rootProject.name = 'JeLib'
-include('jelib-core', 'jelib-io', 'jelib-gui', 'jelib-game')
+include('jelib-core', 'jelib-io', 'jelib-gui', 'jelib-game', 'jelib-media')
