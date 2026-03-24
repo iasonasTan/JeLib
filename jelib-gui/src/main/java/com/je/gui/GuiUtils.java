@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 
 import com.je.core.JeLib;
 import com.je.core.util.Utils;
-import com.je.media.Resources;
 
 /**
  * Utilities related to GUI stuff.

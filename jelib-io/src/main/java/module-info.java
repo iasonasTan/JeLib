@@ -3,6 +3,7 @@
  */
 module JeLib.io {
     requires transitive JeLib.core;
+    requires java.desktop;
 
     exports com.je.io;
     exports com.je.io.configuration;

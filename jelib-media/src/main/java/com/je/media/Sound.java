@@ -1,50 +1,61 @@
 package com.je.media;
 
-import com.je.core.NotInitializedException;
-import com.je.io.configuration.Configuration;
-import com.je.io.configuration.InputProperties;
+import com.je.core.JeLib;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import java.io.IOException;
 
+/**
+ * Wraps {@code javax.sound} package and makes it easier to use.
+ */
 public final class Sound {
-    private static boolean sInitialized = false;
-    private static boolean sEnableSFX, sEnableMusic;
+    /**
+     * Music clip, stored so stop is possible.
+     */
+    private static Clip mMusicClip;
 
-    public static void load() {
-        InputProperties inputProperties = new InputProperties();
-        Configuration.loadProperties("settings.properties", inputProperties);
-        sEnableSFX = inputProperties.getBoolean("enable_sfx", true);
-        sEnableMusic = inputProperties.getBoolean("enable_music", true);
-        sInitialized = true;
-    }
-
-    private static void check() {
-        if(!sInitialized)
-            throw new NotInitializedException();
-    }
-
-    public static void playSFX(Clip clip) {
-        check();
-        if (clip == null || !sEnableSFX)
-            return;
-        if (clip.isRunning())
-            clip.stop();
-        clip.setFramePosition(0);
-        clip.start();
-    }
-
-    public static void playMusic(Clip clip) {
-        check();
-        if(clip == null || !sEnableMusic) {
-            return;
+    /**
+     * Plays given audio one time.
+     * @param audioInputStream Audio to play as {@link AudioInputStream}.
+     */
+    public static void playSFX(AudioInputStream audioInputStream) {
+        try {
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            if (clip.isRunning())
+                clip.stop();
+            clip.setFramePosition(0);
+            clip.start();
+        } catch (LineUnavailableException | IOException e) {
+            JeLib.console().error("Cannot play audio input stream.");
+            JeLib.console().exception(e);
         }
-
-        if(clip.isRunning())
-            clip.stop();
-
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-        clip.start();
     }
 
+    /**
+     * Plays given audio continuously forever until method is
+     * re-called with another audio.
+     * @param audioInputStream Audio to play as {@link AudioInputStream}.
+     */
+    public static void playMusic(AudioInputStream audioInputStream) {
+        try {
+            if(mMusicClip!=null && mMusicClip.isRunning())
+                mMusicClip.stop();
+            mMusicClip = AudioSystem.getClip();
+            mMusicClip.open(audioInputStream);
+            mMusicClip.loop(Clip.LOOP_CONTINUOUSLY);
+            mMusicClip.start();
+        } catch (LineUnavailableException | IOException e) {
+            JeLib.console().error("Cannot play audio input stream.");
+            JeLib.console().exception(e);
+        }
+    }
+
+    /**
+     * Private constructor prevents instantiation.
+     */
     private Sound() {}
 }
