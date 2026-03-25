@@ -44,19 +44,13 @@ public final class IOUtils {
      * @param  path path of file to load as {@link String}
      * @return Returns .wav file loaded as {@link Clip}.
      */
-    public static AudioInputStream loadAudioInputStream(String path, Class<?> clazz) {
-        try {
-            URL rsrcUrl = clazz.getResource(path);
-            if (rsrcUrl == null) {
-                JeLib.console().error("Failed to load sound " + path);
-                return null;
-            }
-            return AudioSystem.getAudioInputStream(rsrcUrl);
-        } catch (UnsupportedAudioFileException | IOException e) {
-            JeLib.console().error("Failed to load sound " + path + " (Exception thrown)");
-            JeLib.console().exception(e);
+    public static AudioInputStream loadAudioInputStream(String path, Class<?> clazz) throws IOException, UnsupportedAudioFileException {
+        URL rsrcUrl = clazz.getResource(path);
+        if (rsrcUrl == null) {
+            JeLib.console().error("Failed to load sound " + path);
+            return null;
         }
-        return null;
+        return AudioSystem.getAudioInputStream(rsrcUrl);
     }
     
     /**

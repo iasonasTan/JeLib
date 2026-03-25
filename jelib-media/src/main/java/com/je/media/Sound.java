@@ -2,10 +2,7 @@ package com.je.media;
 
 import com.je.core.JeLib;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.*;
 import java.io.IOException;
 
 /**
@@ -24,6 +21,12 @@ public final class Sound {
     public static void playSFX(AudioInputStream audioInputStream) {
         try {
             Clip clip = AudioSystem.getClip();
+            clip.addLineListener(lineEvent -> {
+                if(lineEvent.getType()==LineEvent.Type.STOP &&
+                        clip.getFramePosition() == clip.getFrameLength()) {
+                    clip.close();
+                }
+            });
             clip.open(audioInputStream);
             if (clip.isRunning())
                 clip.stop();
@@ -45,6 +48,12 @@ public final class Sound {
             if(mMusicClip!=null && mMusicClip.isRunning())
                 mMusicClip.stop();
             mMusicClip = AudioSystem.getClip();
+            mMusicClip.addLineListener(lineEvent -> {
+                if(lineEvent.getType()==LineEvent.Type.STOP &&
+                        mMusicClip.getFramePosition() == mMusicClip.getFrameLength()) {
+                    mMusicClip.close();
+                }
+            });
             mMusicClip.open(audioInputStream);
             mMusicClip.loop(Clip.LOOP_CONTINUOUSLY);
             mMusicClip.start();

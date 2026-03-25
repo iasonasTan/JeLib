@@ -37,6 +37,17 @@ public final class JeLib {
     }
 
     /**
+     * Runs given code and ignores every type of exception that may get thrown.
+     */
+    public static void ignoreExceptions(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (Exception ignored) {
+            // ignore
+        }
+    }
+
+    /**
      * Private constructor prevents instantiation from outside the class.
      */
     private JeLib(){
