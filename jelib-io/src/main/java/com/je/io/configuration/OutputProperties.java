@@ -13,6 +13,7 @@ import java.util.Properties;
  * by just calling {@link #store(OutputStream)}.
  * @deprecated use Bundle instead.
  */
+@Deprecated
 public class OutputProperties {
     /**
      * Holds properties.

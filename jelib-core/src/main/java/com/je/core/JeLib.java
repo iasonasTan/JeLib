@@ -24,6 +24,19 @@ public final class JeLib {
     }
 
     /**
+     * Sleeps thread for given time and handles {@link InterruptedException} if it gets thrown.
+     * @param millis Time in millis to sleep for as {@code long}.
+     */
+    public static void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            JeLib.console().error("Something went wrong while sleeping.");
+            JeLib.console().exception(e);
+        }
+    }
+
+    /**
      * Private constructor prevents instantiation from outside the class.
      */
     private JeLib(){

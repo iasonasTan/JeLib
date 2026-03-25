@@ -52,9 +52,6 @@ public final class IOUtils {
                 return null;
             }
             return AudioSystem.getAudioInputStream(rsrcUrl);
-//            Clip clip = AudioSystem.getClip();
-//            clip.open(ais);
-//            return clip;
         } catch (UnsupportedAudioFileException | IOException e) {
             JeLib.console().error("Failed to load sound " + path + " (Exception thrown)");
             JeLib.console().exception(e);

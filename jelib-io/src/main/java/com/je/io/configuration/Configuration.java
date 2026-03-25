@@ -156,6 +156,38 @@ public final class Configuration {
     }
 
     /**
+     * Loads a bundle from file with given path inside user's configuration folder.
+     * If the file doesn't exist, method creates it.
+     * @param  filePath Path of the file as string.
+     * @return Returns Loaded bundle.
+     * @see #getConfigInputStream(String, boolean)
+     */
+    public static Bundle loadBundle(String filePath) {
+        try(InputStream inputStream = getConfigInputStream(filePath, true)) {
+            return loadBundle(inputStream);
+        } catch (IOException e) {
+            JeLib.console().error("Could not close input stream.");
+            JeLib.console().exception(e);
+        }
+        return null;
+    }
+
+    /**
+     * Stores a bundle in file with given path inside user's configuration folder.
+     * If the file doesn't exist, method creates it.
+     * @param filePath Path of the file as string.
+     * @param bundle   Bundle to store.
+     */
+    public static void storeBundle(String filePath, Bundle bundle) {
+        try (OutputStream outputStream = getConfigOutputStream(filePath)) {
+            storeBundle(outputStream, bundle);
+        } catch (IOException e) {
+            JeLib.console().error("Could not close stream.");
+            JeLib.console().exception(e);
+        }
+    }
+
+    /**
      * Stores a bundle to given output stream.<br>
      * <b>WARNING: </b>Only int, double, String are getting stored.
      * Other types will be ignored.<br>

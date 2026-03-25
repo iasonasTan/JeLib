@@ -6,6 +6,10 @@ repositories {
     mavenCentral()
 }
 
+compileJava {
+    options.compilerArgs << '-Xlint:deprecation'
+}
+
 dependencies {
     testImplementation libs.junit
     api libs.commons.math3
@@ -24,4 +28,5 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
     }
+
 }

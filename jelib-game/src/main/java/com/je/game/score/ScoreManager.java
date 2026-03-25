@@ -1,15 +1,14 @@
 package com.je.game.score;
 
+import com.je.core.util.Bundle;
 import com.je.io.configuration.Configuration;
-import com.je.io.configuration.InputProperties;
-import com.je.io.configuration.OutputProperties;
 
 import java.io.Closeable;
 
 public final class ScoreManager implements Closeable {
     public static ScoreManager fromSaved() {
-        InputProperties inputProperties = Configuration.loadProperties("score.properties");
-        return new ScoreManager(inputProperties.getDouble("best_score", 0d));
+        Bundle inputBundle = Configuration.loadBundle("score.properties");
+        return new ScoreManager(inputBundle.getDouble("best_score", 0d));
     }
 
     public static ScoreManager fromBestScore(double bs) {
@@ -31,8 +30,10 @@ public final class ScoreManager implements Closeable {
     @Override
     public void close() {
         if(mCurrentScore >mBestScore) {
-            var op = new OutputProperties().put("best_score", mCurrentScore);
-            Configuration.storeProperties("score.properties", op);
+            var outBundle = Bundle.builder()
+                    .put("best_score", mCurrentScore)
+                    .build();
+            Configuration.storeBundle("score.properties", outBundle);
         }
     }
 
