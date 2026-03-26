@@ -38,6 +38,7 @@ public final class GuiUtils {
         JTextArea jTextArea = new JTextArea();
         jTextArea.setEditable(true);
         jTextArea.setText(messageText);
+        jTextArea.setEditable(false);
 
         JScrollPane jScrollPane = new JScrollPane(jTextArea);
         jScrollPane.setVerticalScrollBarPolicy  (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS  );
