@@ -39,13 +39,11 @@ public final class Configuration {
         Path systemConfigDir;
         String osName = System.getProperty("os.name").toLowerCase();
         String userHome = System.getProperty("user.home");
-        if(osName.contains("win")) {
-            systemConfigDir = Paths.get(System.getenv("APPDATA"));
-        } else if (osName.contains("mac")) {
-            systemConfigDir = Paths.get(userHome, "Library", "Application Support");
-        } else { // Unix, Linux
-            systemConfigDir = Paths.get(userHome, ".config");
-        }
+        systemConfigDir = switch (osName) {
+            case String s when s.contains("win") -> Paths.get(System.getenv("APPDATA"));
+            case String s when s.contains("mac") -> Paths.get(userHome, "Library", "Application Support");
+            default                              -> Paths.get(userHome, ".config"); // Unix, Linux
+        };
         Path configDir = Paths.get(systemConfigDir.toAbsolutePath().toString(), appName);
         if(!Files.exists(configDir) || !Files.isDirectory(configDir)) {
             try {
@@ -203,7 +201,8 @@ public final class Configuration {
                 if(!(value instanceof Integer) && !(value instanceof Double) && !(value instanceof String)) return;
                 String valueStr = String.valueOf(value);
                 String line = keyStr+"="+valueStr;
-                bufferedWriter.write(line);
+                bufferedWriter.write(line); 
+                bufferedWriter.write("\n");
             }
             bufferedWriter.flush();
         } catch (IOException e) {

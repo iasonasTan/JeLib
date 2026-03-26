@@ -42,7 +42,7 @@ public final class GuiUtils {
         JScrollPane jScrollPane = new JScrollPane(jTextArea);
         jScrollPane.setVerticalScrollBarPolicy  (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS  );
         jScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        jScrollPane.setPreferredSize(new Dimension(700, 700));
+        jScrollPane.setPreferredSize(new Dimension(700, 600));
 
         JPanel panel = new JPanel(new FlowLayout());
         panel.add(jScrollPane);

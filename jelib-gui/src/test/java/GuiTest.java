@@ -9,6 +9,7 @@ public class GuiTest {
     @Test
     public void guiUtils() {
         JeLib.console().setEnabled(Console.Type.EXCEPTION, false);
+        // Generate a big stack that throws an exception in the bottom.
         try {
             Consumer<Integer> thrower = new Consumer<>() {
                 @Override
