@@ -6,5 +6,6 @@ module JeLib.io {
     requires java.desktop;
 
     exports com.je.io;
+    exports com.je.io.bundle;
     exports com.je.io.configuration;
 }

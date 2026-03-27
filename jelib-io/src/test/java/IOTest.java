@@ -13,7 +13,9 @@ public class IOTest {
 		Bundle bundle = Bundle.builder()
 				.put("key-a",   "a")
 				.put("key-2",   2)
-				.put("key-3.14",3.14)
+				.put("key-3.14", Math.PI)
+				.put("key-4", true)
+				.put("key--4", false)
 				.build();
 
 		Configuration.storeBundle("bundle-a", bundle);

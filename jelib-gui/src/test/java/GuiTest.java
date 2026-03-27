@@ -1,8 +1,12 @@
 import com.je.core.Console;
 import com.je.core.JeLib;
 import com.je.gui.GuiUtils;
+import com.je.gui.Theme;
+import com.je.gui.component.JeComponentBuilder;
 import org.junit.Test;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.function.Consumer;
 
 public class GuiTest {
@@ -25,5 +29,19 @@ public class GuiTest {
         } catch (NumberFormatException e) {
             GuiUtils.showException(e);
         }
+    }
+
+    @Test
+    public void gui() throws InterruptedException {
+        JFrame jFrame = new JFrame("Test Window");
+        JPanel jPanel = new JPanel(new FlowLayout());
+        var builder = new JeComponentBuilder(Theme.Day::new);
+        var jButton = builder.createComponent(JButton.class, "Hello!").get();
+        jButton.addActionListener(_ -> JeLib.console().log("Button is pressed!!!"));
+        jPanel.add(jButton);
+        jFrame.setContentPane(jPanel);
+        jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        jFrame.setVisible(true);
+        while(true){}
     }
 }

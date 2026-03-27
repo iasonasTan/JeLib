@@ -1,4 +1,4 @@
-package com.je.gui;
+package com.je.gui.layout;
 
 import java.awt.*;
 import java.util.ArrayList;

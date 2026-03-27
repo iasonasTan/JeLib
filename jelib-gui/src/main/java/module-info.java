@@ -8,4 +8,7 @@ module JeLib.gui {
     requires JeLib.io;
 
     exports com.je.gui;
+    exports com.je.gui.layout;
+    exports com.je.gui.component;
+    exports com.je.gui.configuration;
 }

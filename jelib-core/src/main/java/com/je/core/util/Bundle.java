@@ -61,7 +61,7 @@ public final class Bundle implements Copyable<Bundle> {
      * @param key Key of object to return.
      * @return Value of given key as {@link String}
      */
-    public String getString(String key) {
+    public String getString(String key) throws ClassCastException {
         return (String)mData.get(key);
     }
 
@@ -70,7 +70,7 @@ public final class Bundle implements Copyable<Bundle> {
      * @param key Key of object to return.
      * @return Value of given key as integer.
      */
-    public int getInteger(String key, int defaultValue) {
+    public int getInteger(String key, int defaultValue) throws ClassCastException {
         Object obj = mData.get(key);
         if(obj==null)
             return defaultValue;
@@ -82,11 +82,24 @@ public final class Bundle implements Copyable<Bundle> {
      * @param key Key of object to return.
      * @return Value of given key as double.
      */
-    public double getDouble(String key, double defaultValue) {
+    public double getDouble(String key, double defaultValue) throws ClassCastException {
         Object obj = mData.get(key);
         if(obj==null)
             return defaultValue;
         return (Double)obj;
+    }
+
+    /**
+     * Returns the value of the given key.
+     * @param key          key of the object to return.
+     * @param defaultValue value to return in case required value is not found.
+     * @return Value of the given key as boolean.
+     */
+    public boolean getBoolean(String key, boolean defaultValue) throws ClassCastException {
+        Object obj = mData.get(key);
+        if(obj==null)
+            return defaultValue;
+        return (Boolean)obj;
     }
 
     /**
