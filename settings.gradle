@@ -7,3 +7,4 @@ plugins {
 
 rootProject.name = 'JeLib'
 include('jelib-core', 'jelib-io', 'jelib-gui', 'jelib-game', 'jelib-media')
+include('jelib-color-picker')

@@ -1,0 +1,27 @@
+package com.je.gui.component;
+
+import javax.swing.*;
+import java.awt.*;
+
+/**
+ * A section on the screen that contains GUI components.
+ */
+public class JeSection extends JPanel {
+    /**
+     * Creates a section that applies given layout manager.
+     * @param layout
+     */
+    public JeSection(LayoutManager layout) {
+        super(layout);
+    }
+
+    /**
+     * Adds a child to the section.
+     * @param node child to add to the section.
+     * @return returns self so chain calls are possible.
+     */
+    public JeSection addChild(JComponent node) {
+        add(node);
+        return this;
+    }
+}

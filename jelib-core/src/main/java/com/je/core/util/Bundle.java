@@ -123,6 +123,19 @@ public final class Bundle implements Copyable<Bundle> {
     }
 
     /**
+     * Checks if bundle contains given keys.
+     * @param keys Keys to check if they exist.
+     * @return true if given key is contained in bundle; false otherwise.
+     */
+    public boolean contains(String... keys) {
+        for(String key: keys) {
+            if(!mData.containsKey(key))
+                return false;
+        }
+        return true;
+    }
+
+    /**
      * Returns a representation of the bundle.
      * @return returns a string that represents the bundle.
      */

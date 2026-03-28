@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/jelib-color-picker" />
             <option value="$PROJECT_DIR$/jelib-core" />
             <option value="$PROJECT_DIR$/jelib-game" />
             <option value="$PROJECT_DIR$/jelib-gui" />

@@ -55,7 +55,15 @@ public class Console {
      */
     private void log(Type type, Object obj, int color) {
         if(!mEnabledTypes.contains(type)) return;
-        mOut.printf("\u001B[%dm[%s] %s\n\u001B[37m", color, type.name(), obj.toString());
+        String message = obj.toString();
+        StringBuilder coloredMessageBuilder = new StringBuilder();
+        for(String line: message.split("\n")) {
+            coloredMessageBuilder
+                    .append("\u001B[").append(color)
+                    .append("m[").append(type.name()).append("] ")
+                    .append(line).append("\n");
+        }
+        mOut.print(coloredMessageBuilder);
     }
 
     /**
