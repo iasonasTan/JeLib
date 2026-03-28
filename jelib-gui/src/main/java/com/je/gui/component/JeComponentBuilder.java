@@ -4,11 +4,13 @@ import com.je.core.JeLib;
 import com.je.core.util.Bundle;
 import com.je.gui.Theme;
 import com.je.gui.configuration.ConfigurationLoader;
+import com.je.io.IOUtils;
 import com.je.io.bundle.BundleIO;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
@@ -86,7 +88,7 @@ public class JeComponentBuilder {
      * @param <T> Type of created and returned component.
      */
     public <T extends JComponent> Optional<T> createTextComponent(Class<T> clazz, String text) {
-        final int foregroundColor = mProperties.getInteger("foreground_color", Color.BLACK.getRGB());
+        final int foregroundColor = mProperties.getInteger(FOREGROUND_COLOR, Color.BLACK.getRGB());
         var textLabel = new JLabel(text);
         textLabel.setForeground(new Color(foregroundColor));
         try {
@@ -116,9 +118,9 @@ public class JeComponentBuilder {
             T component = constructor.newInstance();
 
             final Color TRANSPARENT = new Color(15259903, true);
-            final int backgroundColor = mProperties.getInteger("background_color", Color.WHITE.getRGB());
-            final int borderColor     = mProperties.getInteger("border_color",     Color.BLACK.getRGB());
-            final int borderRadius    = mProperties.getInteger("border_radius",    10);
+            final int backgroundColor = mProperties.getInteger(BACKGROUND_COLOR, Color.WHITE.getRGB());
+            final int borderColor     = mProperties.getInteger(BORDER_COLOR,     Color.BLACK.getRGB());
+            final int borderRadius    = mProperties.getInteger(BORDER_RADIUS,    10);
 
             component.setOpaque(false);
             component.setBackground(TRANSPARENT);
@@ -134,8 +136,14 @@ public class JeComponentBuilder {
         }
     }
 
+    public JeImage createImage(BufferedImage image) {
+        JeImage imageView = new JeImage();
+        imageView.setIcon(new ImageIcon(image));
+        return imageView;
+    }
+
     /**
-     * This is NOT a border.
+     * This is NOT just a border.
      * This draws the background and the border of a component.
      */
     private static final class RoundBorder implements Border {

@@ -24,4 +24,15 @@ public class JeSection extends JPanel {
         add(node);
         return this;
     }
+
+    /**
+     * Adds a child to the section.
+     * @param node child to add to the section.
+     * @param constrain constrain to use
+     * @return returns self so chain calls are possible.
+     */
+    public JeSection addChild(JComponent node, Object constrain) {
+        add(node, constrain);
+        return this;
+    }
 }

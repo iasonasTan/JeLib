@@ -11,7 +11,7 @@ public abstract class AbstractScreen extends JeSection implements Screen {
     private static JFrame sFrame;
 
     public AbstractScreen(JeComponentBuilder builder) {
-        super(new VerticalFlowLayout());
+        super(new VerticalFlowLayout(10, 10));
         builder.styleSection(this);
     }
 
