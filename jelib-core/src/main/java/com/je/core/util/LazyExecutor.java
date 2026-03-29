@@ -14,7 +14,7 @@ public class LazyExecutor {
 
     /**
      * Alternative executor, if method {@link #execute(Bundle)} is not overridden.
-     * Then, this {@link Consumer<  Bundle  >} will do the job.
+     * Then, this {@link Consumer<Bundle>} will do the job.
      */
     private final Consumer<Bundle> mExecutor;
 

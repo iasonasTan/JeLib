@@ -1,20 +1,42 @@
 package com.je.gui;
 
-import com.je.gui.component.JeComponentBuilder;
 import com.je.gui.component.JeSection;
 import com.je.gui.layout.VerticalFlowLayout;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Abstract screen is a screen in the application.
+ * It implements {@link Screen} interface and extend {@link JeSection}.
+ */
 public abstract class AbstractScreen extends JeSection implements Screen {
+    /**
+     * Frame to show screens.
+     */
     private static JFrame sFrame;
 
-    public AbstractScreen(JeComponentBuilder builder) {
+    /**
+     * Disposes frame.
+     * {@link #setVisible()} will create a new window next time it will be called.
+     */
+    public static void dispose() {
+        sFrame.dispose();
+    }
+
+    /**
+     * Constructs an AbstractScreen and styles it based on given {@link JeGuiBuilder}.
+     * @param builder builder used to style self.
+     */
+    public AbstractScreen(JeGuiBuilder builder) {
         super(new VerticalFlowLayout(10, 10));
         builder.styleSection(this);
     }
 
+    /**
+     * Sets the screen visible and set the previous
+     * screen invisible if it exists.
+     */
     @Override
     public void setVisible() {
         if(sFrame == null) {
@@ -31,6 +53,15 @@ public abstract class AbstractScreen extends JeSection implements Screen {
         sFrame.repaint();
     }
 
+    /**
+     * Method used to get screen title.
+     * @return Returns title of screen as {@code string}.
+     */
     protected abstract String title();
+
+    /**
+     * Method used to get screen icon.
+     * @return Returns icon of screen as {@link Image}.
+     */
     protected abstract Image icon();
 }

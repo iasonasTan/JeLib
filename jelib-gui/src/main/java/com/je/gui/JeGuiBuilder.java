@@ -1,10 +1,10 @@
-package com.je.gui.component;
+package com.je.gui;
 
 import com.je.core.JeLib;
 import com.je.core.util.Bundle;
-import com.je.gui.Theme;
+import com.je.gui.component.JeImage;
+import com.je.gui.component.JeSection;
 import com.je.gui.configuration.ConfigurationLoader;
-import com.je.io.IOUtils;
 import com.je.io.bundle.BundleIO;
 
 import javax.swing.*;
@@ -21,7 +21,7 @@ import java.util.Optional;
  * This class is responsible for creating all components for GUI.
  * Only this class is allowed to create GUI components.
  */
-public class JeComponentBuilder {
+public class JeGuiBuilder {
     private final String FOREGROUND_COLOR = "foreground_color";
     private final String BACKGROUND_COLOR = "background_color";
     private final String BORDER_COLOR     = "border_color";
@@ -37,7 +37,7 @@ public class JeComponentBuilder {
      * Constructor taking config loader to load configuration.
      * @param configLoader configuration loader implementation.
      */
-	public JeComponentBuilder(ConfigurationLoader configLoader) {
+	public JeGuiBuilder(ConfigurationLoader configLoader) {
         Theme theme = configLoader.loadTheme();
         try (InputStream inputStream = theme.configStream()) {
             mProperties = BundleIO.loadBundle(inputStream);
@@ -136,10 +136,13 @@ public class JeComponentBuilder {
         }
     }
 
+    /**
+     * Creates an image view with given image.
+     * @param image image to apply to view.
+     * @return returns image view with given image.
+     */
     public JeImage createImage(BufferedImage image) {
-        JeImage imageView = new JeImage();
-        imageView.setIcon(new ImageIcon(image));
-        return imageView;
+        return new JeImage(image);
     }
 
     /**

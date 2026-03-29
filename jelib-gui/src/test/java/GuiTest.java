@@ -3,19 +3,17 @@ import com.je.core.JeLib;
 import com.je.core.util.Bundle;
 import com.je.gui.AbstractScreen;
 import com.je.gui.GuiUtils;
-import com.je.gui.Screen;
+import com.je.gui.JeGuiBuilder;
 import com.je.gui.component.*;
-import com.je.gui.configuration.DefaultConfigurationLoader;
+import com.je.gui.configuration.DefaultConfigurationManager;
 import com.je.gui.layout.VerticalFlowLayout;
 import com.je.io.IOUtils;
 import com.je.io.configuration.Configuration;
 import org.junit.Test;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.function.Consumer;
 
 public class GuiTest {
@@ -43,21 +41,29 @@ public class GuiTest {
     @Test
     public void gui() {
         Configuration.init("library-test");
-        JeComponentBuilder builder = new JeComponentBuilder(new DefaultConfigurationLoader());
+        JeGuiBuilder builder = new JeGuiBuilder(DefaultConfigurationManager.getDefaultLoader());
         TestScreen screen = new TestScreen(builder);
         screen.setVisible();
         while(true){}
     }
 
     static final class TestScreen2 extends AbstractScreen {
-        public TestScreen2(JeComponentBuilder builder) {
+        public TestScreen2(JeGuiBuilder builder) {
             super(builder);
             setLayout(new GridBagLayout());
             JeSection section = builder.createSection(new VerticalFlowLayout());
+            section.setPreferredSize(new Dimension(300, 700));
+
             JeText text = builder.createTextComponent(JeText.class, "This is the second screen...").get();
             section.add(text);
+
             JeImage image = builder.createImage(IOUtils.loadImage("/image2.png", GuiTest.class));
             section.add(image);
+
+            JeButton button = builder.createTextComponent(JeButton.class, "OK Bro.").get();
+            button.addActionListener(_ -> AbstractScreen.dispose());
+            section.add(button);
+
             addChild(section, new GridBagConstraints());
         }
 
@@ -69,7 +75,7 @@ public class GuiTest {
     }
 
     static final class TestScreen extends AbstractScreen implements ActionListener {
-        public TestScreen(JeComponentBuilder builder) {
+        public TestScreen(JeGuiBuilder builder) {
             super(builder);
             setLayout(new GridBagLayout());
             JeSection section = builder.createSection(new VerticalFlowLayout());
@@ -91,7 +97,7 @@ public class GuiTest {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             JeLib.console().log("Button is pressed!!!");
-            new TestScreen2(new JeComponentBuilder(new DefaultConfigurationLoader())).setVisible();
+            new TestScreen2(new JeGuiBuilder(DefaultConfigurationManager.getDefaultLoader())).setVisible();
             Bundle guiS = Configuration.loadBundle("gui.properties");
             Bundle newS = Bundle.builder()
                     .put("night_theme", !guiS.getBoolean("night_theme", false))

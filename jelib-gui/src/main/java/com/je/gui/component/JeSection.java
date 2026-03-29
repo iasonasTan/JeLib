@@ -9,7 +9,7 @@ import java.awt.*;
 public class JeSection extends JPanel {
     /**
      * Creates a section that applies given layout manager.
-     * @param layout
+     * @param layout Layout to apply to section.
      */
     public JeSection(LayoutManager layout) {
         super(layout);

@@ -18,7 +18,7 @@ public final class MapBuilder<K, V> {
      * @see MapBuilder(Map)
      */
     public MapBuilder() {
-        this(new HashMap<K, V>());
+        this(new HashMap<>());
     }
     
     /**
