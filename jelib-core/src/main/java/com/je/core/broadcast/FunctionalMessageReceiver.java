@@ -1,13 +1,13 @@
 package com.je.core.broadcast;
 
-import com.je.core.MessageSystemManager;
+import com.je.core.MessageManager;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 /**
  * This is a functional message receiver, it works with a consumer.
- * It is useful when you want to use an existing method as consumer and pass it easily to {@link MessageSystemManager#registerReceiver(MessageReceiver)}.
+ * It is useful when you want to use an existing method as consumer and pass it easily to {@link MessageManager#registerReceiver(MessageReceiver)}.
  */
 public final class FunctionalMessageReceiver extends AbstractMessageReceiver {
     /**

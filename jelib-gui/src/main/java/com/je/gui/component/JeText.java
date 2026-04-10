@@ -2,5 +2,8 @@ package com.je.gui.component;
 
 import javax.swing.*;
 
-public class JeText extends JPanel {
+public class JeText extends JLabel {
+    JeText(){
+
+    }
 }

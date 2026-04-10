@@ -11,7 +11,7 @@ public class JeSection extends JPanel {
      * Creates a section that applies given layout manager.
      * @param layout Layout to apply to section.
      */
-    public JeSection(LayoutManager layout) {
+    JeSection(LayoutManager layout) {
         super(layout);
     }
 
@@ -34,5 +34,11 @@ public class JeSection extends JPanel {
     public JeSection addChild(JComponent node, Object constrain) {
         add(node, constrain);
         return this;
+    }
+
+    public void addChildren(JComponent... children) {
+        for (JComponent child : children) {
+            add(child);
+        }
     }
 }

@@ -7,7 +7,7 @@ public class JeImage extends JLabel {
     /**
      * Default constructor.
      */
-    public JeImage() {
+    JeImage() {
 
     }
 
@@ -15,7 +15,7 @@ public class JeImage extends JLabel {
      * Constructs image view and sets view's image to given image.
      * @param image image to set as {@link java.awt.image.BufferedImage}.
      */
-    public JeImage(Image image) {
+    JeImage(Image image) {
         setImage(image);
     }
 

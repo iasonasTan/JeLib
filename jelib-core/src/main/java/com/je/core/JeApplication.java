@@ -10,7 +10,7 @@ import java.util.List;
  * Application class that manages everything about the program.
  * It's recommended to extend this class set it as the starter point.
  */
-public class JeApplication implements MessageSystemManager {
+public class JeApplication implements MessageManager {
     /**
      * List storing the active receivers.
      */

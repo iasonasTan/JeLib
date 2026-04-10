@@ -8,7 +8,7 @@ import com.je.core.broadcast.MessageReceiver;
  * Sends each broadcast to the receiver it can go via {@link #broadcastMessage(Message)}.
  * Registers receivers via {@link #registerReceiver(MessageReceiver)}.
  */
-public interface MessageSystemManager {
+public interface MessageManager {
     /**
      * Sends given message to the right receiver(s).
      * @param message message to send.

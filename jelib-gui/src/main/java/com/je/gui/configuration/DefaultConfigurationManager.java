@@ -5,7 +5,8 @@ import com.je.gui.Theme;
 import com.je.io.configuration.Configuration;
 
 /**
- * Default configuration manager for
+ * Default configuration manager for library.<br>
+ * <b>WARNING:</b>This class requires {@link Configuration} to be loaded.
  * @see ConfigurationLoader
  */
 public final class DefaultConfigurationManager {

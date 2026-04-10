@@ -3,17 +3,16 @@ import com.je.core.JeLib;
 import com.je.core.util.Bundle;
 import com.je.gui.AbstractScreen;
 import com.je.gui.GuiUtils;
-import com.je.gui.JeGuiBuilder;
+import com.je.gui.component.JeGuiBuilder;
 import com.je.gui.component.*;
 import com.je.gui.configuration.DefaultConfigurationManager;
+import com.je.gui.event.SimpleActionListener;
 import com.je.gui.layout.VerticalFlowLayout;
 import com.je.io.IOUtils;
 import com.je.io.configuration.Configuration;
 import org.junit.Test;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.function.Consumer;
 
 public class GuiTest {
@@ -74,7 +73,7 @@ public class GuiTest {
         protected Image icon() { return IOUtils.loadImage("/images.png", GuiUtils.class); }
     }
 
-    static final class TestScreen extends AbstractScreen implements ActionListener {
+    static final class TestScreen extends AbstractScreen implements SimpleActionListener {
         public TestScreen(JeGuiBuilder builder) {
             super(builder);
             setLayout(new GridBagLayout());
@@ -85,7 +84,7 @@ public class GuiTest {
             section.add(jButton);
             var text = builder.createTextComponent(JeText.class, "This is the first screen...").get();
             section.add(text);
-            add(section, new GridBagConstraints());
+            addChild(section, new GridBagConstraints());
         }
 
         @Override
@@ -95,7 +94,7 @@ public class GuiTest {
         protected Image icon() { return IOUtils.loadImage("/images.png", GuiTest.class); }
 
         @Override
-        public void actionPerformed(ActionEvent actionEvent) {
+        public void actionPerformed() {
             JeLib.console().log("Button is pressed!!!");
             new TestScreen2(new JeGuiBuilder(DefaultConfigurationManager.getDefaultLoader())).setVisible();
             Bundle guiS = Configuration.loadBundle("gui.properties");

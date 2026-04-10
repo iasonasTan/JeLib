@@ -1,20 +1,21 @@
-package com.je.gui;
+package com.je.gui.component;
 
 import com.je.core.JeLib;
 import com.je.core.util.Bundle;
-import com.je.gui.component.JeImage;
-import com.je.gui.component.JeSection;
+import com.je.gui.Theme;
 import com.je.gui.configuration.ConfigurationLoader;
 import com.je.io.bundle.BundleIO;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -87,12 +88,18 @@ public class JeGuiBuilder {
      * @return Styled component of given type {@link T}
      * @param <T> Type of created and returned component.
      */
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public <T extends JComponent> Optional<T> createTextComponent(Class<T> clazz, String text) {
         final int foregroundColor = mProperties.getInteger(FOREGROUND_COLOR, Color.BLACK.getRGB());
-        var textLabel = new JLabel(text);
+        JLabel textLabel = new JLabel(text);
         textLabel.setForeground(new Color(foregroundColor));
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/zalando-sans-bold.ttf"));
+            if(JButton.class.isAssignableFrom(clazz)) {
+                Map attributes = font.getAttributes();
+                attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+                font = font.deriveFont(attributes);
+            }
             textLabel.setFont(font.deriveFont(16f));
         } catch (FontFormatException | IOException e) {
             JeLib.console().warn("Could not load internal font. Font file corrupted or missing.");
@@ -100,8 +107,13 @@ public class JeGuiBuilder {
         }
         Optional<T> componentOpt = createComponent(clazz);
         componentOpt.ifPresent(component -> {
+            Dimension size = textLabel.getPreferredSize();
+            Insets borderInsets = component.getBorder().getBorderInsets(component);
+            size.width  += borderInsets.left*2;
+            size.height += borderInsets.top *2;
             component.setLayout(new GridBagLayout());
             component.add(textLabel, new GridBagConstraints());
+            component.setPreferredSize(size);
         });
         return componentOpt;
     }
@@ -114,23 +126,24 @@ public class JeGuiBuilder {
      */
     public <T extends JComponent> Optional<T> createComponent(Class<T> clazz) {
         try {
-            Constructor<T> constructor = clazz.getConstructor();
+            Constructor<T> constructor = clazz.getDeclaredConstructor();
+            constructor.setAccessible(true);
             T component = constructor.newInstance();
 
             final Color TRANSPARENT = new Color(15259903, true);
-            final int backgroundColor = mProperties.getInteger(BACKGROUND_COLOR, Color.WHITE.getRGB());
-            final int borderColor     = mProperties.getInteger(BORDER_COLOR,     Color.BLACK.getRGB());
-            final int borderRadius    = mProperties.getInteger(BORDER_RADIUS,    10);
+            final int BACKGROUND_COLOR = mProperties.getInteger(this.BACKGROUND_COLOR, Color.WHITE.getRGB());
+            final int BORDER_COLOR     = mProperties.getInteger(this.BORDER_COLOR,     Color.BLACK.getRGB());
+            final int BORDER_RADIUS    = mProperties.getInteger(this.BORDER_RADIUS,    10);
 
             component.setOpaque(false);
             component.setBackground(TRANSPARENT);
 
-            Border border = new RoundBorder(new Color(backgroundColor), new Color(borderColor), borderRadius);
+            Border border = new RoundBorder(new Color(BACKGROUND_COLOR), new Color(BORDER_COLOR), BORDER_RADIUS);
             component.setBorder(border);
             return Optional.of(component);
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             JeLib.console().error("Failed to create instance of "+clazz.getName());
-            JeLib.console().error("Class: "+clazz.getSimpleName()+" must have a public no-arg constructor.");
+            JeLib.console().error("Class: "+clazz.getSimpleName()+" must have an accessible no-arg constructor.");
             JeLib.console().exception(e);
             return Optional.empty();
         }

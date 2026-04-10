@@ -1,12 +1,12 @@
 package com.je.core.broadcast;
 
-import com.je.core.MessageSystemManager;
+import com.je.core.MessageManager;
 import com.je.core.util.Bundle;
 
 /**
  * A message contains an action and a bundle.
- * You can send it to a {@link MessageReceiver} via {@link MessageSystemManager}.
- * @see MessageSystemManager
+ * You can send it to a {@link MessageReceiver} via {@link MessageManager}.
+ * @see MessageManager
  */
 public final class Message {
     /**
