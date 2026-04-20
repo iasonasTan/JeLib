@@ -1,0 +1,30 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation libs.junit
+    api libs.commons.math3
+    implementation libs.guava
+    implementation project(':jelib-core')
+    implementation project(':jelib-io')
+    implementation project(':jelib-gui')
+    implementation project(':jelib-media')
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
