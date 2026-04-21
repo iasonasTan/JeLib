@@ -43,7 +43,7 @@ public class GuiTest {
         JeGuiBuilder builder = new JeGuiBuilder(DefaultConfigurationManager.getDefaultLoader());
         TestScreen screen = new TestScreen(builder);
         screen.setVisible();
-        while(true){}
+        JeLib.sleep(5_000); // 5 SEC
     }
 
     static final class TestScreen2 extends AbstractScreen {
