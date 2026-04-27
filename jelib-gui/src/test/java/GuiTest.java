@@ -18,6 +18,7 @@ import java.util.function.Consumer;
 public class GuiTest {
     @Test
     public void guiUtils() {
+        GuiUtils.setContact("developer+email@email.com");
         JeLib.console().setEnabled(Console.Type.EXCEPTION, false);
         // Generate a big stack that throws an exception in the bottom.
         try {
@@ -35,6 +36,7 @@ public class GuiTest {
         } catch (NumberFormatException e) {
             GuiUtils.showException(e);
         }
+        JeLib.console().setEnabled(Console.Type.EXCEPTION, true);
     }
 
     @Test

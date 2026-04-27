@@ -3,7 +3,6 @@
  */
 module JeLib.gui {
     requires transitive JeLib.core;
-    requires transitive JeLib.media;
     requires transitive java.desktop;
     requires JeLib.io;
 

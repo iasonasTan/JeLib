@@ -3,7 +3,7 @@
  */
 module JeLib.media {
     requires transitive JeLib.core;
-    requires java.desktop;
+    requires transitive java.desktop;
     requires JeLib.io;
 
     exports com.je.media;
