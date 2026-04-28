@@ -1,3 +1,4 @@
+package com.je.media.test;
 import com.je.core.JeLib;
 import com.je.io.IOUtils;
 import com.je.media.Sound;

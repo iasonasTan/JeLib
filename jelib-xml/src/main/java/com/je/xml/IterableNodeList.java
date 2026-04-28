@@ -1,10 +1,12 @@
 package com.je.xml;
 
-import org.w3c.dom.*;
-import java.util.*;
-import java.util.*;
-import java.util.*;
-import java.util.function.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class IterableNodeList implements Iterable<Node> {
     private final NodeList mNodeList;

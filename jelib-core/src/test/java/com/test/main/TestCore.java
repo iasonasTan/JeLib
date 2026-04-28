@@ -58,7 +58,7 @@ public class TestCore {
         JeLib.console().setEnabled(Console.Type.INFO, false);
         JeLib.console().log("Hello from JeLib!");
         JeLib.console().setEnabled(Console.Type.WARNING, true);
-        JeLib.console().warn("This lib is empty!");
+        JeLib.console().warn("This lib is not empty!");
         JeLib.console().error("Aborting!");
         JeLib.console().setEnabled(Console.Type.INFO, true);
         JeLib.console().log("Hello! Can you see me?");

@@ -1,17 +1,21 @@
 package com.je.xml.writer;
 
+import java.io.OutputStream;
+import java.lang.reflect.Field;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import com.je.core.JeLib;
 import com.je.xml.JeXmlConstants;
-
-import java.io.*;
-import java.lang.reflect.*;
-import java.util.*;
-import org.xml.sax.*;
-import org.w3c.dom.*;
-import javax.xml.parsers.*;
-import javax.xml.transform.*;
-import javax.xml.transform.stream.*;
-import javax.xml.transform.dom.*;
 
 public class JeXmlWriter<T> implements JeXmlConstants {
     public void write(OutputStream outputStream, T t) {

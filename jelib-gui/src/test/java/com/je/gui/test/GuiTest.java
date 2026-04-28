@@ -1,3 +1,5 @@
+package com.je.gui.test;
+
 import com.je.core.Console;
 import com.je.core.JeLib;
 import com.je.core.util.Bundle;
@@ -6,6 +8,7 @@ import com.je.gui.GuiUtils;
 import com.je.gui.component.JeGuiBuilder;
 import com.je.gui.component.*;
 import com.je.gui.configuration.DefaultConfigurationManager;
+import com.je.gui.dialog.ExceptionDialog;
 import com.je.gui.event.SimpleActionListener;
 import com.je.gui.layout.VerticalFlowLayout;
 import com.je.io.IOUtils;
@@ -18,7 +21,7 @@ import java.util.function.Consumer;
 public class GuiTest {
     @Test
     public void guiUtils() {
-        GuiUtils.setContact("developer+email@email.com");
+        GuiUtils.exceptionDialog().putProperty(ExceptionDialog.PROPERTY_CONTACT, "developer+email@email.com");
         JeLib.console().setEnabled(Console.Type.EXCEPTION, false);
         // Generate a big stack that throws an exception in the bottom.
         try {
@@ -26,7 +29,6 @@ public class GuiTest {
                 @Override
                 public void accept(Integer integer) {
                     if (integer <= 0)
-                        // noinspection all
                         Integer.parseInt("a");
                     else
                         accept(--integer);
@@ -34,7 +36,7 @@ public class GuiTest {
             };
             thrower.accept(20);
         } catch (NumberFormatException e) {
-            GuiUtils.showException(e);
+            GuiUtils.exceptionDialog().showMessage(e);
         }
         JeLib.console().setEnabled(Console.Type.EXCEPTION, true);
     }
@@ -55,7 +57,7 @@ public class GuiTest {
             JeSection section = builder.createSection(new VerticalFlowLayout());
             section.setPreferredSize(new Dimension(300, 700));
 
-            JeText text = builder.createTextComponent(JeText.class, "This is the second screen...").get();
+            JeText text = builder.createTextComponent(JeText.class, "This is the second screen....").get();
             section.add(text);
 
             JeImage image = builder.createImage(IOUtils.loadImage("/image2.png", GuiTest.class));

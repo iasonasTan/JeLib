@@ -1,3 +1,5 @@
+package com.je.io.test;
+
 import org.junit.Test;
 import com.je.io.configuration.*;
 import com.je.core.util.Bundle;

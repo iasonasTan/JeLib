@@ -1,4 +1,4 @@
-package com.test.xml;
+package com.je.xml.test;
 
 import org.junit.Test;
 
