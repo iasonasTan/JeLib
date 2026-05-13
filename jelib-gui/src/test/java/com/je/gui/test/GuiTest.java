@@ -14,6 +14,7 @@ import com.je.gui.layout.VerticalFlowLayout;
 import com.je.io.IOUtils;
 import com.je.io.configuration.Configuration;
 import org.junit.Test;
+import com.je.gui.xml.Loader;
 
 import java.awt.*;
 import java.util.function.Consumer;
@@ -36,6 +37,7 @@ public class GuiTest {
             };
             thrower.accept(20);
         } catch (NumberFormatException e) {
+            // Catch and show exception
             GuiUtils.exceptionDialog().showMessage(e);
         }
         JeLib.console().setEnabled(Console.Type.EXCEPTION, true);
@@ -45,7 +47,28 @@ public class GuiTest {
     public void gui() {
         Configuration.init("library-test");
         JeGuiBuilder builder = new JeGuiBuilder(DefaultConfigurationManager.getDefaultLoader());
-        TestScreen screen = new TestScreen(builder);
+        Loader loader = new Loader(builder);
+        AbstractScreen screen = new AbstractScreen(
+            loader.loadFrom(
+                getClass().getResourceAsStream("/screen1.xml")
+            )
+        ){
+            /**
+             * Method used to get screen title.
+             * @return Returns title of screen as {@code string}.
+             */
+            protected String title() {
+                return "Screen 1 - Test app";
+            }
+
+            /**
+             * Method used to get screen icon.
+             * @return Returns icon of screen as {@link Image}.
+             */
+            protected Image icon() {
+                return IOUtils.loadImage("/images.png", GuiTest.class);
+            }
+        };
         screen.setVisible();
         JeLib.sleep(5_000); // 5 SEC
     }

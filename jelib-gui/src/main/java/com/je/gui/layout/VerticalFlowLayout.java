@@ -38,7 +38,7 @@ public final class VerticalFlowLayout implements LayoutManager2 {
     /**
      * Constructs a VerticalFlowLayout with horizontal and vertical gaps set to zero.
      */
-    public VerticalFlowLayout () {
+    public VerticalFlowLayout() {
         this(0, 0);
     }
 

@@ -1,0 +1,8 @@
+<com.je.gui.layout.VerticalFlowLayout
+    layout="com.je.gui.layout.VerticalFlowLayout">
+
+    <JeText
+        text="Hello">
+    </JeText>
+
+</com.je.gui.layout.VerticalFlowLayout>

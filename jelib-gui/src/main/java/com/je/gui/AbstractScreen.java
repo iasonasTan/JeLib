@@ -35,6 +35,10 @@ public abstract class AbstractScreen implements Screen {
         mSection = builder.createSection(new VerticalFlowLayout(10, 10));
     }
 
+    public AbstractScreen(JeSection section) {
+        mSection = section;
+    }
+
     public void setLayout(LayoutManager layout) {
         mSection.setLayout(layout);
     }
