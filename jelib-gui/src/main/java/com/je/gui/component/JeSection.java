@@ -1,5 +1,7 @@
 package com.je.gui.component;
 
+import com.je.gui.layout.CenterLayout;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -21,6 +23,9 @@ public class JeSection extends JPanel {
      * @return returns self so chain calls are possible.
      */
     public JeSection addChild(JComponent node) {
+        if(getLayout() instanceof CenterLayout) {
+            return addChild(node, new GridBagConstraints());
+        }
         add(node);
         return this;
     }

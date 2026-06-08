@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -91,28 +92,31 @@ public class JeGuiBuilder {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public <T extends JComponent> Optional<T> createTextComponent(Class<T> clazz, String text) {
         final int foregroundColor = mProperties.getInteger(FOREGROUND_COLOR, Color.BLACK.getRGB());
-        JLabel textLabel = new JLabel(text);
-        textLabel.setForeground(new Color(foregroundColor));
+        final int backgroundColor = mProperties.getInteger(BACKGROUND_COLOR, Color.WHITE.getRGB());
+        JTextArea textArea = new JTextArea(text);
+        textArea.setEditable(false);
+        textArea.setForeground(new Color(foregroundColor));
+        textArea.setBackground(new Color(backgroundColor));
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/zalando-sans-bold.ttf"));
+            Font font = Font.createFont(Font.TRUETYPE_FONT, Objects.requireNonNull(getClass().getResourceAsStream("/zalando-sans-bold.ttf")));
             if(JButton.class.isAssignableFrom(clazz)) {
                 Map attributes = font.getAttributes();
                 attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
                 font = font.deriveFont(attributes);
             }
-            textLabel.setFont(font.deriveFont(16f));
+            textArea.setFont(font.deriveFont(16f));
         } catch (FontFormatException | IOException e) {
             JeLib.console().warn("Could not load internal font. Font file corrupted or missing.");
             JeLib.console().exception(e);
         }
         Optional<T> componentOpt = createComponent(clazz);
         componentOpt.ifPresent(component -> {
-            Dimension size = textLabel.getPreferredSize();
+            Dimension size = textArea.getPreferredSize();
             Insets borderInsets = component.getBorder().getBorderInsets(component);
             size.width  += borderInsets.left*2;
             size.height += borderInsets.top *2;
             component.setLayout(new GridBagLayout());
-            component.add(textLabel, new GridBagConstraints());
+            component.add(textArea, new GridBagConstraints());
             component.setPreferredSize(size);
         });
         return componentOpt;
@@ -130,15 +134,15 @@ public class JeGuiBuilder {
             constructor.setAccessible(true);
             T component = constructor.newInstance();
 
-            final Color TRANSPARENT = new Color(15259903, true);
             final int BACKGROUND_COLOR = mProperties.getInteger(this.BACKGROUND_COLOR, Color.WHITE.getRGB());
+            final int FOREGROUND_COLOR = mProperties.getInteger(this.FOREGROUND_COLOR, Color.BLACK.getRGB());
             final int BORDER_COLOR     = mProperties.getInteger(this.BORDER_COLOR,     Color.BLACK.getRGB());
             final int BORDER_RADIUS    = mProperties.getInteger(this.BORDER_RADIUS,    10);
 
-            component.setOpaque(false);
-            component.setBackground(TRANSPARENT);
+            component.setBackground(new Color(BACKGROUND_COLOR));
+            component.setForeground(new Color(FOREGROUND_COLOR));
 
-            Border border = new RoundBorder(new Color(BACKGROUND_COLOR), new Color(BORDER_COLOR), BORDER_RADIUS);
+            Border border = new RoundBorder(new Color(BORDER_COLOR), BORDER_RADIUS);
             component.setBorder(border);
             return Optional.of(component);
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
@@ -163,33 +167,28 @@ public class JeGuiBuilder {
      * This draws the background and the border of a component.
      */
     private static final class RoundBorder implements Border {
-        private final Color mColor, mBackground;
+        private final Color mColor;
         private final int mRadius;
 
         /**
          * Constructor initializing fields.
-         * @param background background color
          * @param color      border color
          * @param radius     border radius
          */
-        RoundBorder(Color background, Color color, int radius) {
+        RoundBorder(Color color, int radius) {
             mColor = color;
-            mBackground = background;
             mRadius = radius;
         }
 
         @Override
         public void paintBorder(Component component, Graphics graphics, int x, int y, int width, int height) {
-            Graphics2D graphics2D = (Graphics2D) graphics;
-            graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            Graphics2D g2 = (Graphics2D) graphics;
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-            // Fill shape with background first...
-            graphics2D.setColor(mBackground);
-            graphics2D.fillRoundRect(x, y, width-1, height-1, mRadius, mRadius);
-
-            // Draw the borderline above...
-            graphics2D.setColor(mColor);
-            graphics2D.drawRoundRect(x, y, width-1, height-1, mRadius, mRadius);
+            Color prev = g2.getColor();
+            g2.setColor(mColor);
+            g2.drawRoundRect(x, y, width - 1, height - 1, mRadius, mRadius);
+            g2.setColor(prev);
         }
 
         @Override

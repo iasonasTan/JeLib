@@ -5,7 +5,6 @@ import com.je.gui.dialog.ExceptionDialog;
 
 /**
  * Utilities related to GUI stuff.
- * e.g. {@link #showException(Throwable)}
  */
 public final class GuiUtils {
     private static Dialog<Throwable> sExceptionDialog;

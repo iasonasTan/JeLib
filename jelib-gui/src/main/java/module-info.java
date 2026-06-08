@@ -10,4 +10,5 @@ module JeLib.gui {
     exports com.je.gui.layout;
     exports com.je.gui.component;
     exports com.je.gui.configuration;
+    exports com.je.gui.dialog;
 }

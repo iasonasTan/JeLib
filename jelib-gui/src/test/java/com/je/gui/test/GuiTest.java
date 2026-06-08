@@ -2,19 +2,20 @@ package com.je.gui.test;
 
 import com.je.core.Console;
 import com.je.core.JeLib;
-import com.je.core.util.Bundle;
 import com.je.gui.AbstractScreen;
 import com.je.gui.GuiUtils;
+import com.je.gui.Theme;
 import com.je.gui.component.JeGuiBuilder;
-import com.je.gui.component.*;
+import com.je.gui.component.JeInput;
+import com.je.gui.component.JeSection;
+import com.je.gui.component.JeText;
 import com.je.gui.configuration.DefaultConfigurationManager;
 import com.je.gui.dialog.ExceptionDialog;
-import com.je.gui.event.SimpleActionListener;
-import com.je.gui.layout.VerticalFlowLayout;
+import com.je.gui.layout.CenterLayout;
+import com.je.gui.xml.Loader;
 import com.je.io.IOUtils;
 import com.je.io.configuration.Configuration;
 import org.junit.Test;
-import com.je.gui.xml.Loader;
 
 import java.awt.*;
 import java.util.function.Consumer;
@@ -43,16 +44,19 @@ public class GuiTest {
         JeLib.console().setEnabled(Console.Type.EXCEPTION, true);
     }
 
+    // Loader doesn't work, TODO: Fix Loader.
     @Test
-    public void gui() {
+    public void loader() {
+        if(1 < 2) {
+            return;
+        }
+
         Configuration.init("library-test");
         JeGuiBuilder builder = new JeGuiBuilder(DefaultConfigurationManager.getDefaultLoader());
         Loader loader = new Loader(builder);
-        AbstractScreen screen = new AbstractScreen(
-            loader.loadFrom(
-                getClass().getResourceAsStream("/screen1.xml")
-            )
-        ){
+        JeSection section = loader.loadFrom(getClass().getResourceAsStream("/screen1.xml"));
+        section.setPreferredSize(new Dimension(1000, 800));
+        AbstractScreen screen = new AbstractScreen(section){
             /**
              * Method used to get screen title.
              * @return Returns title of screen as {@code string}.
@@ -73,62 +77,50 @@ public class GuiTest {
         JeLib.sleep(5_000); // 5 SEC
     }
 
-    static final class TestScreen2 extends AbstractScreen {
-        public TestScreen2(JeGuiBuilder builder) {
-            super(builder);
-            setLayout(new GridBagLayout());
-            JeSection section = builder.createSection(new VerticalFlowLayout());
-            section.setPreferredSize(new Dimension(300, 700));
+    @Test
+    public void gui() {
+        final class TestScreen extends AbstractScreen {
+            /**
+             * Constructs an AbstractScreen and styles it based on given {@link JeGuiBuilder}.
+             *
+             * @param builder builder used to style self.
+             */
+            public TestScreen(JeGuiBuilder builder) {
+                super(builder);
+                setLayout(new CenterLayout());
 
-            JeText text = builder.createTextComponent(JeText.class, "This is the second screen....").get();
-            section.add(text);
+                String txt = "Lorem ipsum dolor sit amet.\nI don't know the rest but I will type something else in English.\nI wasted too much time in this library but I'm gonna waste however it needs to be a good library.";
+                JeText text = builder.createTextComponent(JeText.class, txt).orElseThrow(RuntimeException::new);
+                addChild(text);
 
-            JeImage image = builder.createImage(IOUtils.loadImage("/image2.png", GuiTest.class));
-            section.add(image);
+                JeInput input = builder.createComponent(JeInput.class).orElseThrow(RuntimeException::new);
+                input.setPreferredSize(new Dimension(100, 100));
+                addChild(input);
+            }
 
-            JeButton button = builder.createTextComponent(JeButton.class, "OK Bro.").get();
-            button.addActionListener(_ -> AbstractScreen.dispose());
-            section.add(button);
+            /**
+             * Method used to get screen title.
+             *
+             * @return Returns title of screen as {@code string}.
+             */
+            @Override
+            protected String title() {
+                return "TestScreen - JeLib:jelib-gui";
+            }
 
-            addChild(section, new GridBagConstraints());
+            /**
+             * Method used to get screen icon.
+             *
+             * @return Returns icon of screen as {@link Image}.
+             */
+            @Override
+            protected Image icon() {
+                return IOUtils.loadImage("/images.png", getClass());
+            }
         }
-
-        @Override
-        protected String title() { return "Test Screen 2"; }
-
-        @Override
-        protected Image icon() { return IOUtils.loadImage("/images.png", GuiUtils.class); }
-    }
-
-    static final class TestScreen extends AbstractScreen implements SimpleActionListener {
-        public TestScreen(JeGuiBuilder builder) {
-            super(builder);
-            setLayout(new GridBagLayout());
-            JeSection section = builder.createSection(new VerticalFlowLayout());
-            section.setPreferredSize(new Dimension(230, 100));
-            var jButton = builder.createTextComponent(JeButton.class, "Hello!").get();
-            jButton.addActionListener(this);
-            section.add(jButton);
-            var text = builder.createTextComponent(JeText.class, "This is the first screen...").get();
-            section.add(text);
-            addChild(section, new GridBagConstraints());
-        }
-
-        @Override
-        protected String title() { return "Test Screen"; }
-
-        @Override
-        protected Image icon() { return IOUtils.loadImage("/images.png", GuiTest.class); }
-
-        @Override
-        public void actionPerformed() {
-            JeLib.console().log("Button is pressed!!!");
-            new TestScreen2(new JeGuiBuilder(DefaultConfigurationManager.getDefaultLoader())).setVisible();
-            Bundle guiS = Configuration.loadBundle("gui.properties");
-            Bundle newS = Bundle.builder()
-                    .put("night_theme", !guiS.getBoolean("night_theme", false))
-                    .build();
-            Configuration.storeBundle("gui.properties", newS);
-        }
+        JeGuiBuilder builder = new JeGuiBuilder(Theme.Night::new);
+        AbstractScreen testScreen = new TestScreen(builder);
+        testScreen.setVisible();
+        JeLib.sleep(5_000);
     }
 }

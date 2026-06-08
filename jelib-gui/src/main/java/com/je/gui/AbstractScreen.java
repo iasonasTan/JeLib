@@ -47,6 +47,10 @@ public abstract class AbstractScreen implements Screen {
         mSection.addChildren(children);
     }
 
+    public void addChild(JComponent node) {
+        mSection.addChild(node);
+    }
+
     public void addChild(JComponent node, Object constrain) {
         mSection.addChild(node, constrain);
     }
