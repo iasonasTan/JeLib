@@ -12,7 +12,7 @@ JeLib consists of the following main modules:
 
 - **jelib-core** - Core utilities and fundamental classes used across the library
 - **jelib-io** - Input/output operations and file handling utilities
-- **jelib-gui** - GUI components and utilities for building user interfaces
+- **jelib-gui** - A cleaner extension of Java Swing and AWT. Also comes with XML loading.
 - **jelib-game** - Game development utilities and helpers
 - **jelib-media** - Media processing and handling functionality
 - **jelib-xml** - XML parsing and manipulation utilities
