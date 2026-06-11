@@ -55,7 +55,7 @@ public class Console {
      */
     private void log(Type type, Object obj, int color) {
         if(!mEnabledTypes.contains(type)) return;
-        String message = obj.toString();
+        String message = String.valueOf(obj);
         StringBuilder coloredMessageBuilder = new StringBuilder();
         for(String line: message.split("\n")) {
             coloredMessageBuilder

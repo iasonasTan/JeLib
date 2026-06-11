@@ -62,6 +62,7 @@ public class TestCore {
         JeLib.console().error("Aborting!");
         JeLib.console().setEnabled(Console.Type.INFO, true);
         JeLib.console().log("Hello! Can you see me?");
+        JeLib.console().log(null);
         JeLib.console().setEnabled(Console.Type.EXCEPTION, false);
         JeLib.console().exception(new RuntimeException("Cannot load stuff"));
     }
