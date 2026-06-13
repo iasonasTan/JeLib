@@ -75,7 +75,7 @@ public class JeGuiBuilder {
      * @param section section to style.
      * @return returns given section.
      */
-    public JeSection styleSection(JeSection section) {
+    private JeSection styleSection(JeSection section) {
         final int COLOR = mProperties.getInteger(SECTION_COLOR, Color.WHITE.getRGB());
         section.setBackground(new Color(COLOR));
         return section;

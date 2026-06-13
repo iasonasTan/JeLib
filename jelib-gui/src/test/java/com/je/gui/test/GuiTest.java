@@ -5,13 +5,11 @@ import com.je.core.JeLib;
 import com.je.gui.AbstractScreen;
 import com.je.gui.GuiUtils;
 import com.je.gui.Theme;
-import com.je.gui.component.JeGuiBuilder;
-import com.je.gui.component.JeInput;
-import com.je.gui.component.JeSection;
-import com.je.gui.component.JeText;
+import com.je.gui.component.*;
 import com.je.gui.configuration.DefaultConfigurationManager;
 import com.je.gui.dialog.ExceptionDialog;
 import com.je.gui.layout.CenterLayout;
+import com.je.gui.layout.VerticalFlowLayout;
 import com.je.gui.xml.Loader;
 import com.je.io.IOUtils;
 import com.je.io.configuration.Configuration;
@@ -89,13 +87,23 @@ public class GuiTest {
                 super(builder);
                 setLayout(new CenterLayout());
 
+                JeSection section = builder.createSection(new VerticalFlowLayout());
+
                 String txt = "Lorem ipsum dolor sit amet.\nI don't know the rest but I will type something else in English.\nI wasted too much time in this library but I'm gonna waste however it needs to be a good library.";
                 JeText text = builder.createTextComponent(JeText.class, txt).orElseThrow(RuntimeException::new);
-                addChild(text);
 
                 JeInput input = builder.createComponent(JeInput.class).orElseThrow(RuntimeException::new);
                 input.setPreferredSize(new Dimension(100, 100));
-                addChild(input);
+
+                JeButton btn = builder.createTextComponent(JeButton.class, "Exit").orElseThrow(RuntimeException::new);
+                btn.addActionListener(ignore -> {
+                    AbstractScreen.dispose();
+                    System.exit(0);
+                });
+
+                section.addChildren(text, input, btn);
+
+                addChildren(section);
             }
 
             /**
