@@ -40,9 +40,25 @@ public class Console {
      * @param type Type of logging to enable or disable.
      * @param e    True of False when this type of logging is enabled or not.
      */
+    @Deprecated
     public void setEnabled(Type type, boolean e) {
         if(e) mEnabledTypes.add(type);
         else  mEnabledTypes.remove(type);
+    }
+
+    /**
+     * Enables and disables given logging types.
+     * @param enabled marks whether to disable or enable the given logging types.
+     * @param types   types to disable/enable.
+     */
+    public void setEnabled(boolean enabled, Type... types) {
+        for(Type type: types) {
+            if(enabled) {
+                mEnabledTypes.add(type);
+            } else {
+                mEnabledTypes.remove(type);
+            }
+        }
     }
 
     /**
